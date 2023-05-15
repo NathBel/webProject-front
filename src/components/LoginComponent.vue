@@ -107,7 +107,7 @@
     import axios from 'axios';
     import { reactive } from 'vue';
     import  { useRouter } from 'vue-router';
-    //import bcrypt from 'bcrypt';
+    import bcrypt from 'bcryptjs';
 
     const router = useRouter();
 
@@ -123,6 +123,12 @@
         //const hashedPassword = await bcrypt.hash(password.value, 10);
         
         try {
+            // Generate a salt (a random value used in the encryption process)
+            //const salt = bcrypt.genSaltSync(10);
+
+            // Encrypt the password
+            //const hashedPassword = bcrypt.hashSync(password.value, salt);
+            
             const response = await axios.post('http://localhost:8000/user/login',{
                 userEmail: mail.value,
                 password: password.value
@@ -137,7 +143,7 @@
 
         } catch (error) {
             // Handle login error
-            this.errorMessage = error.response.data.message;
+            let errorMessage = error.response.data.message;
             login.error = 'true';
         }
     }

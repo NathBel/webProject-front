@@ -155,6 +155,7 @@
     import axios from 'axios';
     import { reactive } from 'vue';
     import  { useRouter } from 'vue-router';
+    import bcrypt from 'bcryptjs';
 
     const router = useRouter();
 
@@ -176,7 +177,6 @@
         try{
             //Check if all fields are filled
             if(firstname.value == '' || lastname.value == '' || phone.value == '' || address.value == '' || zipcode.value == '' || city.value == '' || mail.value == '' || password.value == ''){
-                console.log(firstname.value, lastname.value, phone.value, address.value, zipcode.value, city.value, mail.value, password.value)
                 register.errorField = true;
                 console.log(register.errorField);
                 return;
@@ -193,6 +193,12 @@
                 console.log(error);
             }
 
+            // Generate a salt (a random value used in the encryption process)
+            const salt = bcrypt.genSaltSync(10);
+
+            // Encrypt the password
+            const hashedPassword = bcrypt.hashSync(password.value, salt);
+
             //Create account
             const data = {
                 firstname: firstname.value,
@@ -202,7 +208,7 @@
                 city: city.value,
                 zip_code: zipcode.value,
                 email: mail.value,
-                password: password.value,
+                password: hashedPassword,
                 isAdmin: 0,
             }
 
