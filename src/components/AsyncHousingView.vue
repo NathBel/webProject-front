@@ -237,7 +237,7 @@
     const getHousingData = async() => {
         try {
             let responseHousing = await axios.get(`https://nathimmo-backend.cluster-ig3.igpolytech.fr/housing/id/${route.query.id_housing}`);
-            responseHousing.data.DPE = '/src/assets/image/DPE/'+responseHousing.data.energy_performance+'.png';
+            responseHousing.data.DPE = '/public/image/DPE/'+responseHousing.data.energy_performance+'.png';
 
             try{
                 const responsePhoto = await axios.get(`https://nathimmo-backend.cluster-ig3.igpolytech.fr/photos/${route.query.id_housing}`);
@@ -252,7 +252,7 @@
         
                 return responseHousing.data;
             } catch (error) {
-                responseHousing.data.photos = './src/assets/image/no-image3.jpg';
+                responseHousing.data.photos = '/public/image/no-image3.jpg';
                 console.error(error);
                 return responseHousing.data;
             }
