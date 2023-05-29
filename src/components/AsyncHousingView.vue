@@ -237,7 +237,7 @@
     const getHousingData = async() => {
         try {
             let responseHousing = await axios.get(`https://nathimmo-backend.cluster-ig3.igpolytech.fr/housing/id/${route.query.id_housing}`);
-            responseHousing.data.DPE = '/public/image/DPE/'+responseHousing.data.energy_performance+'.png';
+            responseHousing.data.DPE = '/image/DPE/'+responseHousing.data.energy_performance+'.png';
 
             try{
                 const responsePhoto = await axios.get(`https://nathimmo-backend.cluster-ig3.igpolytech.fr/photos/${route.query.id_housing}`);

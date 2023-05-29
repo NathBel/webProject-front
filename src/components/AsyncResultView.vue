@@ -339,7 +339,7 @@
                     element.photos = `data:${responsePhoto.data[0].type};base64,${base64Data}`;
                 
                 } catch (error) {
-                    element.photos = '/public/image/no-image3.jpg';
+                    element.photos = '/image/no-image3.jpg';
                 }
             });
 
