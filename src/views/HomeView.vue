@@ -43,7 +43,7 @@
           </div>
         </div>
     </section>
-    <section class="bg-cover bg-center bg-[url('./bg-img/maison2-1.jpg')] w-screen h-screen snap-start flex items-end">
+    <section class="bg-cover bg-center bg-[url('./bg-img/locate_homepage.jpg')] w-screen h-screen snap-start flex items-end">
       <div>
         <div class="flex justify-center lg:block">
           <div class="bg-header-footer text-white lg:m-16 text-lg lg:text-3xl font-DMsans rounded-xl px-4 lg:px-8 py-2 w-max">
