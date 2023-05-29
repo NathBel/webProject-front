@@ -1,17 +1,16 @@
 <template>
-    <div class="bg-search-area text-lg p-10 rounded-3xl">
-
+    <div class="bg-search-area text-xs min-[350px]:text-sm lg:text-lg p-1 min-[350px]:p-4 lg:p-10 rounded-3xl mt-4">
         <form>
             <div class="flex justify-center">
-                <label class="flex gap-8 py-2">
-                    <span class="flex items-center gap-4"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                <label class="lg:flex gap-8 min-[350px]:py-2">
+                    <span class="flex items-center gap-4"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ml-2 w-6 min-[350px]:w-8 h-6 min-[350px]:h-8">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z" />
                         </svg>
                         <h4>Type de bien</h4>
                     </span>
                     <div class="flex items-center">
                         <label
-                            class="relative flex cursor-pointer items-center rounded-full p-3"
+                            class="relative flex cursor-pointer items-center rounded-full px-2 min-[35Opx]:p-3"
                             for="checkbox-8"
                             data-ripple-dark="true"
                         >
@@ -121,61 +120,58 @@
                 </label>
             </div>
 
-            <div class="flex gap-16 justify-center">
-                <label class="flex gap-8 py-2">
-                    <span class="flex items-center gap-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+            <div class="lg:flex gap-16 justify-center">
+                <label class="min-[350px]:flex gap-8  min-[350px]:py-2">
+                    <span class="flex items-center gap-2 lg:gap-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ml-2 w-6 min-[350px]:w-8 h-6 min-[350px]:h-8">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
                             <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
                         </svg>
                         <h4>Lieux</h4>
                     </span>
                     <input type="text" v-model="searchQuery" @input="getSearchResults"
-                        class="text-base border-slate-200 placeholder:italic placeholder:text-slate-400 placeholder:text-sm contrast-more:border-slate-400 contrast-more:placeholder-slate-500" placeholder="Où ? ex: ville, code postal..."/>
-                    <ul class="absolute py-2 px-1 bg-danger" v-if="citySearchResults">
-                        <li v-for="searchResult in citySearchResults" :key="searchResult.id" class="py-2 cursor-pointer">{{ searchResult.city }}</li>
-                    </ul>
+                        class="mx-2 px-2 min-[350px]:p-2 h-8 border-2 border-sky-900 rounded-3xl text-base placeholder:italic placeholder:text-slate-400 placeholder:text-sm contrast-more:border-slate-400 contrast-more:placeholder-slate-500" placeholder="Où ? ex: ville"/>
                     
                     </label>
 
-                <label class="flex gap-8 py-2">
-                    <span class="flex items-center gap-4"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                <label class="min-[350px]:flex gap-2 lg:gap-8 py-2">
+                    <span class="flex items-center gap-4"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ml-2 w-6 min-[350px]:w-8 h-6 min-[350px]:h-8">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75z" />
                     </svg>
                     <h4>Budget</h4>
                     </span>
-                    <input v-model="minBudget" class="w-28 border-slate-200 text-base placeholder:italic placeholder:text-slate-400 placeholder:text-sm contrast-more:border-slate-400 contrast-more:placeholder-slate-500" type="number" placeholder="Min"/>
-                    <input v-model="maxBudget" class="w-28 border-slate-200 text-base placeholder:italic placeholder:text-slate-400 placeholder:text-sm contrast-more:border-slate-400 contrast-more:placeholder-slate-500" type="number" placeholder="Max"/>
+                    <input v-model="minBudget" class="[appearance:textfield] mx-2 p-2 h-8 border-2 border-sky-900 rounded-3xl w-28 text-base placeholder:italic placeholder:text-slate-400 placeholder:text-sm contrast-more:border-slate-400 contrast-more:placeholder-slate-500" type="number" placeholder="Min"/>
+                    <input v-model="maxBudget" class="[appearance:textfield] p-2 h-8 border-2 border-sky-900 rounded-3xl w-28 text-base placeholder:italic placeholder:text-slate-400 placeholder:text-sm contrast-more:border-slate-400 contrast-more:placeholder-slate-500" type="number" placeholder="Max"/>
                 </label>
             </div>
 
-            <div class="flex gap-16 justify-center">
-                <label class="flex gap-8 py-2">
-                    <span class="flex items-center gap-4"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+            <div class="lg:flex gap-16 justify-center">
+                <label class="min-[350px]:flex gap-2 lg:gap-8 py-2">
+                    <span class="flex items-center gap-4"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ml-2 w-6 min-[350px]:w-8 h-6 min-[350px]:h-8">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6.429 9.75L2.25 12l4.179 2.25m0-4.5l5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0l4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0l-5.571 3-5.571-3" />
                         </svg>
                         <h4>Terrain</h4>
                     </span>
-                    <input v-model="minTerrain" class="w-24 border-slate-200 text-base placeholder:italic placeholder:text-slate-400 placeholder:text-sm contrast-more:border-slate-400 contrast-more:placeholder-slate-500" type="number" placeholder="Min"/>
-                    <input v-model="maxTerrain" class="w-24 border-slate-200  text-base placeholder:italic placeholder:text-slate-400 placeholder:text-sm contrast-more:border-slate-400 contrast-more:placeholder-slate-500" type="number" placeholder="Max"/>
+                    <input v-model="minTerrain" class="[appearance:textfield] mx-2 p-2 h-8 border-2 border-sky-900 rounded-3xl w-24 text-base placeholder:italic placeholder:text-slate-400 placeholder:text-sm contrast-more:border-slate-400 contrast-more:placeholder-slate-500" type="number" placeholder="Min"/>
+                    <input v-model="maxTerrain" class="[appearance:textfield] p-2 h-8 border-2 border-sky-900 rounded-3xl w-24 text-base placeholder:italic placeholder:text-slate-400 placeholder:text-sm contrast-more:border-slate-400 contrast-more:placeholder-slate-500" type="number" placeholder="Max"/>
                 </label>
 
 
-                <label class="flex gap-8 py-2">
-                    <span class="flex items-center gap-4"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                <label class="min-[350px]:flex gap-2 lg:gap-8 py-2">
+                    <span class="flex items-center gap-4"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ml-2 w-6 min-[350px]:w-8 h-6 min-[350px]:h-8">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 21v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21m0 0h4.5V3.545M12.75 21h7.5V10.75M2.25 21h1.5m18 0h-18M2.25 9l4.5-1.636M18.75 3l-1.5.545m0 6.205l3 1m1.5.5l-1.5-.5M6.75 7.364V3h-3v18m3-13.636l10.5-3.819" />
                         </svg>
                         <h4>Surface</h4>
                     </span>
-                    <input v-model="minSurface" class="w-24 border-slate-200 text-base placeholder:italic placeholder:text-slate-400 placeholder:text-sm contrast-more:border-slate-400 contrast-more:placeholder-slate-500" type="number" placeholder="Min"/>
-                    <input v-model="maxSurface" class="w-24 border-slate-200 text-base placeholder:italic placeholder:text-slate-400 placeholder:text-sm contrast-more:border-slate-400 contrast-more:placeholder-slate-500" type="number" placeholder="Max"/>
+                    <input v-model="minSurface" class="[appearance:textfield] mx-2 p-2 h-8 border-2 border-sky-900 rounded-3xl w-24 text-base placeholder:italic placeholder:text-slate-400 placeholder:text-sm contrast-more:border-slate-400 contrast-more:placeholder-slate-500" type="number" placeholder="Min"/>
+                    <input v-model="maxSurface" class="[appearance:textfield] p-2 h-8 border-2 border-sky-900 rounded-3xl w-24 text-base placeholder:italic placeholder:text-slate-400 placeholder:text-sm contrast-more:border-slate-400 contrast-more:placeholder-slate-500" type="number" placeholder="Max"/>
                 </label>
             </div>
 
             <div class="flex justify-end p-2">
                 <input
                     type="submit" value="Rechercher" @click.prevent="searchHousing()"
-                    class="uppercase inline-block rounded bg-blue-primary px-4 pb-2.5 pt-2 text-lg font-medium leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
+                    class="uppercase inline-block rounded bg-blue-primary px-2.5 min-[350px]:px-4 pb-1 min-[350px]:pb-2.5 pt-1 min-[350px]:pt-2 text-sm min-[350px]:text-lg font-medium leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
             </div>
         </form>
     </div>
@@ -199,49 +195,28 @@
     const apartement = ref(true);
 
     const searchHousing = (() => {
-    // Use the retrieved values for further processing
-    
-    const rent = (localStorage.getItem('activePage') === 'rent');
-    const sale = (localStorage.getItem('activePage') === 'sale');
+        // Use the retrieved values for further processing
+        
+        const rent = (localStorage.getItem('activePage') === 'rent');
+        const sale = (localStorage.getItem('activePage') === 'sale');
 
 
-    router.push({
-        name: 'ResultView',
-        query: {
-            city: searchQuery.value,
-            minBudget: minBudget.value,
-            maxBudget: maxBudget.value,
-            minSurface: minSurface.value,
-            maxSurface: maxSurface.value,
-            minTerrain: minTerrain.value,
-            maxTerrain: maxTerrain.value,
-            rent: rent,
-            sale: sale,
-            land: land.value,
-            house: house.value,
-            apartement: apartement.value
-        }
-    });
-});
-
-    
-    const queryTimeout = ref(null);
-    const citySearchResults = ref(null);
-    const searchError = ref(null);
-
-    const getSearchResults = () => {
-    clearTimeout(queryTimeout.value);
-    queryTimeout.value = setTimeout(async () => {
-        if (searchQuery.value !== "") {
-            try{
-                const result = await axios.get(`http://localhost:8000/housing/startCity/${searchQuery.value}`);
-                citySearchResults.value = result.data;
-            } catch {
-                searchError.value = true;
+        router.push({
+            name: 'ResultView',
+            query: {
+                land: land.value,
+                house: house.value,
+                apartement: apartement.value,
+                city: searchQuery.value,
+                minBudget: minBudget.value,
+                maxBudget: maxBudget.value,
+                minSurface: minSurface.value,
+                maxSurface: maxSurface.value,
+                minTerrain: minTerrain.value,
+                maxTerrain: maxTerrain.value,
+                rent: rent,
+                sale: sale,
             }
-            return;
-        }
-        citySearchResults.value = null;
-    }, 300);
-};
+        });
+    });
 </script>

@@ -1,7 +1,7 @@
 <template>
-    <div class="w-screen mt-8 ">
-        <div class="flex justify-between mx-8 my-4">
-            <h2 class="text-2xl font-medium">
+    <div class="w-screen mt-8">
+        <div class="flex flex-col lg:flex-row justify-between mx-4 lg:mx-8 my-4">
+            <h2 class="text-xl lg:text-2xl font-medium">
                 Nos {{ AgenciesDataLength }} Agences partout en France !
             </h2>
             <div class="flex items-center text-xl gap-2 text-lime-600 cursor-pointer" v-if="isAdmin === 1" @click="showAddAgency = true">
@@ -38,23 +38,54 @@
                             Ajouter
                         </button>
                     </div>
+                    <div 
+                    v-if="adding.emptyFields"
+                    class="mt-6 bg-red-300 flex justify-center w-full rounded px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-red-700 shadow-[0_4px_9px_-4px_#3b71ca] hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
+                        Veuillez saisir tous les champs !
+                    </div>
                 </div>
             </div>
 
         </div>
-        <div class="grid grid-cols-3 bg-info mx-8 my-4">
-            <div v-for="agency in AgenciesData" :key="agency.id_agency">
-                <div class="bg-green-200 m-4">
-                    <p v-if="modifyKey !== agency.id_agency">{{ agency.address }}</p>
-                    <input v-if="modifyKey === agency.id_agency" type="text" placeholder="Nouvelle Adresse Postale" v-model="agencyAddress" />
-                    <p v-if="modifyKey !== agency.id_agency">{{ agency.zip_code }}</p>
-                    <input v-if="modifyKey === agency.id_agency" type="text" placeholder="Nouveau Code Postal" v-model="agencyZipCode" />
-                    <p v-if="modifyKey !== agency.id_agency">{{ agency.city }}</p>
-                    <input v-if="modifyKey === agency.id_agency" type="text" placeholder="Nouvelle ville" v-model="agencyCity" />
-                    <p v-if="modifyKey !== agency.id_agency">{{ agency.phone }}</p>
-                    <input v-if="modifyKey === agency.id_agency" type="text" placeholder="Nouveau Num Téléphone" v-model="agencyPhone" />
 
-                    <div class="flex items-center justify-center gap-1" v-if="isAdmin === 1">
+        <div class="mx-8">
+            <div 
+                v-if="adding.success"
+                class="mt-6 w-full bg-green-300 flex justify-center rounded px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-green-700 shadow-[0_4px_9px_-4px_#3b71ca] hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
+                Agence ajoutée avec succès !
+            </div>
+        </div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-3 mx-8 my-4">
+            <div v-for="agency in AgenciesData" :key="agency.id_agency">
+                <div class="flex flex-col items-center text-xl rounded-3xl border-2 border-sky-900 bg-slate-200 m-4 p-2">
+                    <div class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                        </svg>
+                        <p v-if="modifyKey !== agency.id_agency">{{ agency.address }}</p>
+                        <input v-if="modifyKey === agency.id_agency" type="text" placeholder="Nouvelle Adresse Postale" v-model="agencyAddress" />
+                    </div>
+                
+                    <div class="flex items-center gap-2">   
+                        <p v-if="modifyKey !== agency.id_agency">{{ agency.city }}</p>
+                        <input v-if="modifyKey === agency.id_agency" type="text" placeholder="Nouvelle ville" v-model="agencyCity" />
+                        <p v-if="modifyKey !== agency.id_agency">({{ agency.zip_code }})</p>
+                        <input v-if="modifyKey === agency.id_agency" type="text" placeholder="Nouveau Code Postal" v-model="agencyZipCode" />
+                    </div>
+
+
+                    <div class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+                        </svg>
+
+                        <p v-if="modifyKey !== agency.id_agency">{{ agency.phone }}</p>
+                        <input v-if="modifyKey === agency.id_agency" type="text" placeholder="Nouveau Num Téléphone" v-model="agencyPhone" />
+                    </div>
+
+                    <div class="hidden lg:flex items-center justify-center gap-1" v-if="isAdmin === 1">
                         <svg xmlns="http://www.w3.org/2000/svg" 
                              fill="none" viewBox="0 0 24 24" 
                              stroke-width="1.5" 
@@ -119,16 +150,30 @@
 <script setup>
     import axios from 'axios';
     import jwtDecode from 'jwt-decode';
-    import { ref } from 'vue';
+    import { ref, reactive } from 'vue';
 
     let showConfirmation = ref(false);
     let modifyKey = ref(-1);
     let showAddAgency = ref(false);
 
+    const adding = reactive({
+        success: false,
+        error: false,
+        emptyFields: false
+    });
+
+    const success = async () => {
+        adding.success = true;
+
+        // Set a timeout to change the variable to false after 3 seconds
+        setTimeout(() => {
+            adding.success = false;
+        }, 3000);
+    }
 
     const getAgenciesData = async() => {
         try {
-            const responseAgencies = await axios.get(`http://localhost:8000/agency`);
+            const responseAgencies = await axios.get(`https://nathimmo-backend.cluster-ig3.igpolytech.fr/agency`);
             return responseAgencies.data;
         } catch (error) {
             console.error(error);
@@ -150,6 +195,12 @@
     try {
         // Decode the token
         const decoded = jwtDecode(token);
+        const currentTimestamp = Math.floor(Date.now() / 1000); // Current timestamp in seconds
+        if (decoded.exp < currentTimestamp) {
+            console.log('Access token has expired');
+        } else {
+            console.log('Access token has NOT expired');
+        }
 
         id = decoded.dataId;
         isAdmin = decoded.dataIsAdmin;
@@ -162,9 +213,15 @@
         console.error('Failed to decode token:', error);
     }
 
+    console.log(token);
+
     const deleteAgency = async(id_agency) => {
         try {
-            const response = await axios.delete(`http://localhost:8000/agency/${id_agency}`);
+             const response = await axios.delete(`https://nathimmo-backend.cluster-ig3.igpolytech.fr/agency/${id_agency}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`, // Attach the token as "Bearer <token>"
+                },
+            });
             showConfirmation.value = false;
             // Remove the deleted appointment from the appointmentData array
             AgenciesData = AgenciesData.filter((agency) => agency.id_agency !== id_agency);
@@ -202,11 +259,15 @@
         agencyPhone = agencyPhone !== null ? agencyPhone : AgenciesData[i].phone;
         try {
             if (agencyCity && agencyAddress && agencyZipCode && agencyPhone) {
-                const response = await axios.put(`http://localhost:8000/agency/${agencyId}`, {
+                const response = await axios.put(`https://nathimmo-backend.cluster-ig3.igpolytech.fr/agency/${agencyId}`, {
                     address: agencyAddress,
                     city: agencyCity,
                     zip_code: agencyZipCode,
                     phone: agencyPhone,
+                    }, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
                 });
                 // Update the appointmentData array
                 AgenciesData = AgenciesData.map((agency) => {
@@ -234,26 +295,36 @@
     let newAgencyPhone = null;
 
     const addAgency = async () =>{
-        try {
-            if (newAgencyCity && newAgencyAddress && newAgencyZipCode && newAgencyPhone) {
-                const response = await axios.post(`http://localhost:8000/agency`, {
-                    address: newAgencyAddress,
-                    city: newAgencyCity,
-                    zip_code: newAgencyZipCode,
-                    phone: newAgencyPhone,
-                });
-                // Update the appointmentData array
-                AgenciesData = [...AgenciesData, {
-                    id_agency: response.data.id_agency,
-                    address: newAgencyAddress,
-                    city: newAgencyCity,
-                    zip_code: newAgencyZipCode,
-                    phone: newAgencyPhone,
-                }];
-            }     
-            showAddAgency.value = false;
-        } catch (error) {
-            console.error(error);
+        if(newAgencyCity === null || newAgencyAddress === null || newAgencyZipCode === null || newAgencyPhone === null) {
+            adding.emptyFields = true;
+            return;
+        } else{
+            try {
+                if (newAgencyCity && newAgencyAddress && newAgencyZipCode && newAgencyPhone) {
+                    const response = await axios.post(`https://nathimmo-backend.cluster-ig3.igpolytech.fr/agency`, {
+                        address: newAgencyAddress,
+                        city: newAgencyCity,
+                        zip_code: newAgencyZipCode,
+                        phone: newAgencyPhone,
+                    }, {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    });
+                    // Update the appointmentData array
+                    AgenciesData = [...AgenciesData, {
+                        id_agency: response.data.id_agency,
+                        address: newAgencyAddress,
+                        city: newAgencyCity,
+                        zip_code: newAgencyZipCode,
+                        phone: newAgencyPhone,
+                    }];
+                }     
+                showAddAgency.value = false;
+                success();
+            } catch (error) {
+                console.error(error);
+            }
         }
     };
 

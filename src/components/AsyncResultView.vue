@@ -1,12 +1,12 @@
 <template>
-    <div class="w-screen mt-8 mx-10">
-        <div class="flex justify-between">
-            <h2 class="text-2xl font-medium">
+    <div class="w-screen mt-8 mx-4 lg:mx-10">
+        <div class="flex justify-between lg:mx-16">
+            <h2 class="text-lg lg:text-2xl font-medium">
                 {{ ResultDataLength }} Biens Trouvé(s)
             </h2>
-            <div class="flex items-center text-xl gap-2 text-lime-600 cursor-pointer" v-if="isAdmin === 1" @click="showAddHousing = true">
+            <div class="flex items-center text-lg lg:text-xl gap-2 text-lime-600 cursor-pointer" v-if="isAdmin === 1" @click="showAddHousing = true">
                 <h3>Ajouter un bien</h3>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 lg:w-7 lg:h-7">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
             </div>
@@ -20,9 +20,11 @@
                     <h3 class="text-lg font-semibold mb-4 text-black">Ajouter un nouveau bien</h3>
                     <div class="flex flex-col gap-4 m-6">
                         <div class="flex gap-3">
-                            <div><input type="radio" v-model="newHousingType" value="maison" name="housingType"  /> Maison</div>
-                            <div><input type="radio" v-model="newHousingType" value="appartement" name="housingType"/> Appartement</div>
-                            <div><input type="radio" v-model="newHousingType" value="terrain" name="housingType"/> Terrain</div>
+                            <div class="flex gap-2">
+                                <input type="radio" v-model="newHousingType" value="maison" name="housingType" /> Maison
+                                <input type="radio" v-model="newHousingType" value="appartement" name="housingType"/> Appartement
+                                <input type="radio" v-model="newHousingType" value="terrain" name="housingType"/> Terrain
+                            </div>
                         </div>
                         <input type="number" placeholder="Prix" v-model="newHousingPrice" />
                         <input type="text" placeholder="Addresse Postale" v-model="newHousingAddress" />
@@ -66,37 +68,47 @@
                             Ajouter
                         </button>
                     </div>
+                    <div 
+                        v-if="adding.emptyFields"
+                        class="mt-6 bg-red-300 flex justify-center w-full rounded px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-red-700 shadow-[0_4px_9px_-4px_#3b71ca] hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
+                            Veuillez saisir tous les champs !
+                    </div>
                 </div>
             </div>
         </div>
+
+        <div 
+            v-if="adding.success"
+            class="my-6 w-full bg-green-300 flex justify-center rounded px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-green-700 shadow-[0_4px_9px_-4px_#3b71ca] hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
+            Bien ajouté avec succès !
+        </div>
+
         <!-- Affichage des résultats -->
-        <div class="grid bg-slate-300 mb-8">
+        <div class="grid pt-2">
             <div v-for="result in ResultData" :key="result.id_housing">
-                <div class="flex cursor-pointer hover:bg-slate-500 bg-slate-400 m-16 p-4" @click.prevent="showHousing(result.id_housing)">
+                <div class="flex cursor-pointer lg:rounded-3xl lg:border-2 border-b border-sky-900 hover:bg-slate-200 lg:mx-16 mb-8 p-4" @click.prevent="showHousing(result.id_housing)">
                     <div class="w-full h-full">
-                        <div class="flex justify-center">
-                            <div class="m-4">
-                                <p>{{ result.photos }}</p>
-                                <img :src="result.photos" alt="Image du logement" class="w-80 h-52 object-none">
-                                
+                        <div class="lg:flex justify-center">
+                            <div class="w-full h-1/2 lg:w-80 lg:h-52 lg:m-4 flex justify-center">
+                                <img :src="result.photos" alt="Image du logement" class="object-fill lg:w-80 lg:h-52">                             
                             </div>
                             <div>
-                                <div class="m-4 flex items-end w-80 gap-x-4">
+                                <div class="m-2 lg:m-4 flex items-end gap-x-4 justify-between">
                                     <p class="text-3xl font-extrabold">{{ result.price.toLocaleString() }} €</p>
                                     <p v-if="result.type !== 'terrain'" class="text-base italic">soit {{ Math.round(result.price / result.living_surface).toLocaleString() }} €/m²</p>
                                     <p v-else class="text-base italic">soit {{ Math.round(result.price / result.global_surface).toLocaleString() }} €/m²</p>
                                 </div>
-                                <p class=" m-4 text-xl">{{ result.type.charAt(0).toUpperCase() + result.type.slice(1) }}</p>
-                                <div class="m-4 w-96">
+                                <p class="m-2 lg:m-4 text-lg blg:text-xl">{{ result.type.charAt(0).toUpperCase() + result.type.slice(1) }}</p>
+                                <div class="m-2 lg:m-4 lg:w-96">
                                     <p class="text-lg">{{ result.number_room }} pièces - {{ result.living_surface }}m² habitable - {{ result.global_surface }}m² de terrain</p>
                                 </div>
-                                <p class="m-4 text-xl">{{ result.city }} ({{ result.zip_code }}) </p>
+                                <p class="m-2 lg:m-4 text-lg blg:text-xl">{{ result.city }} ({{ result.zip_code }}) </p>
                                 <div class="flex justify-end items-end">
-                                    <svg v-if="!likes.includes(result.id_housing)" @click.stop="addLike(result.id_housing)" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="cursor-pointer w-10 h-10">
+                                    <svg v-if="!likes.includes(result.id_housing)" @click.stop="addLike(result.id_housing)" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="cursor-pointer w-7 h-7 lg:w-10 lg:h-10">
                                         <path stroke-linecap="round" stroke-linejoin="round" 
                                         d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
                                     </svg>
-                                    <svg v-if="likes.includes(result.id_housing)" @click.stop="removeLike(result.id_housing)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="cursor-pointer text-red-700 w-10 h-10">
+                                    <svg v-if="likes.includes(result.id_housing)" @click.stop="removeLike(result.id_housing)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="cursor-pointer text-red-700 w-7 h-7 lg:w-10 lg:h-10">
                                         <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
                                     </svg>
                                 </div>     
@@ -112,39 +124,32 @@
 <script setup>
     import axios from 'axios';
     import { useRoute, useRouter } from 'vue-router';
-    import { isEqual } from 'lodash';
+    import isEqual from 'lodash/isEqual';
     import jwtDecode from 'jwt-decode';
-    import { ref } from 'vue';
+    import { ref, watch, reactive } from 'vue';
+
+    const adding = reactive({
+        success: false,
+        error: false,
+        emptyFields: false
+    });
+
+    const success = async () => {
+        adding.success = true;
+
+        // Set a timeout to change the variable to false after 3 seconds
+        setTimeout(() => {
+            adding.success = false;
+        }, 3000);
+    }
 
     const token = localStorage.getItem('token');
 
-    let id = null;
-    let isAdmin = null;
-    let firstName = null;
-    let lastName = null;
-    let email = null;
-    let showAddHousing = ref(false);
-
-    if(token){
-        try {
-        // Decode the token
-        const decoded = jwtDecode(token);
-
-        id = decoded.dataId;
-        isAdmin = decoded.dataIsAdmin;
-        firstName = decoded.dataFirstname;
-        lastName = decoded.dataLastname;
-        email = decoded.dataEmail;
-
-        } catch (error) {
-            console.error('Failed to decode token:', error);
-        }
-    }
-
-
-
-    const route = useRoute();
-    const router = useRouter();
+    let id;
+    let isAdmin;
+    let firstName;
+    let lastName;
+    let email;
 
     let responseCity = null;
     let MinBudget = null;
@@ -160,68 +165,129 @@
     let responseTypeHouse = null;
     let responseTypeApartement = null;
     let responseTypeLand = null;
+    let responseResearch = null;
+
+    let showAddHousing = ref(false);
+
+    const route = useRoute();
+    const router = useRouter();
+
+    if(token){
+        try {
+        // Decode the token
+        const decoded = jwtDecode(token);
+
+        // Assign the values
+        id = decoded.dataId;
+        isAdmin = decoded.dataIsAdmin;
+        firstName = decoded.dataFirstname;
+        lastName = decoded.dataLastname;
+        email = decoded.dataEmail;
+        
+
+        } catch (error) {
+            console.error('Failed to decode token:', error);
+        }
+    }
 
     const getResultData = async() => {
         try {
             //Type of housing
             const responseType = [];
 
-            if (route.query.house === 'true') {
-                const response = await axios.get(`http://localhost:8000/housing/type/maison`);
+            try{
+                if (route.query.house === 'true') {
+                const response = await axios.get(`https://nathimmo-backend.cluster-ig3.igpolytech.fr/housing/type/maison`);
                 responseType.push(...response.data);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+            
+
+            try{
+                if (route.query.apartement === 'true') {
+                const response = await axios.get(`https://nathimmo-backend.cluster-ig3.igpolytech.fr/housing/type/appartement`);
+                responseType.push(...response.data);
+                }
+            } catch (error) {
+                console.log(error);
             }
 
-            if (route.query.apartement === 'true') {
-                const response = await axios.get(`http://localhost:8000/housing/type/appartement`);
+            try{
+                if (route.query.land === 'true') {
+                const response = await axios.get(`https://nathimmo-backend.cluster-ig3.igpolytech.fr/housing/type/terrain`);
                 responseType.push(...response.data);
-            }
-
-            if (route.query.land === 'true') {
-                const response = await axios.get(`http://localhost:8000/housing/type/terrain`);
-                responseType.push(...response.data);
+                }
+            } catch (error) {
+                console.log(error);
             }
 
             const getMinBudget = async()=>{
-                const response = await axios.get(`http://localhost:8000/housing/min_price`);
-                return response.data[0].min;
+                try{
+                    const response = await axios.get(`https://nathimmo-backend.cluster-ig3.igpolytech.fr/housing/min_price`);
+                    return response.data[0].min;
+                } catch (error) {
+                    console.log(error);
+                }
             }
 
             const getMaxBudget = async()=>{
-                const response = await axios.get(`http://localhost:8000/housing/max_price`);
-                return response.data[0].max;
+                try{
+                    const response = await axios.get(`https://nathimmo-backend.cluster-ig3.igpolytech.fr/housing/max_price`);
+                    return response.data[0].max;
+                } catch (error) {
+                    console.log(error);
+                }
             }
 
             const getMinSurface = async()=>{
-                const response = await axios.get(`http://localhost:8000/housing/min_surface`);
-                return response.data[0].min;
+                try {
+                    const response = await axios.get(`https://nathimmo-backend.cluster-ig3.igpolytech.fr/housing/min_surface`);
+                    return response.data[0].min;
+                } catch (error) {
+                    console.log(error);
+                }
             }
 
             const getMaxSurface = async()=>{
-                const response = await axios.get(`http://localhost:8000/housing/max_surface`);
-                return response.data[0].max;
+                try{
+                    const response = await axios.get(`https://nathimmo-backend.cluster-ig3.igpolytech.fr/housing/max_surface`);
+                    return response.data[0].max;
+                } catch (error) {
+                    console.log(error);
+                }
             }
 
             const getMinTerrain = async()=>{
-                const response = await axios.get(`http://localhost:8000/housing/min_global_surface`);
-                return response.data[0].min;
+                try {
+                    const response = await axios.get(`https://nathimmo-backend.cluster-ig3.igpolytech.fr/housing/min_global_surface`);
+                    return response.data[0].min;
+                } catch (error) {
+                    console.log(error);
+                }
             }
 
             const getMaxTerrain = async()=>{
-                const response = await axios.get(`http://localhost:8000/housing/max_global_surface`);
-                return response.data[0].max;
+                try{
+                    const response = await axios.get(`https://nathimmo-backend.cluster-ig3.igpolytech.fr/housing/max_global_surface`);
+                    return response.data[0].max;
+                } catch (error) {
+                    console.log(error);
+                }
             }
 
-            let city = route.query.city === '' ? 'pourcentage' : req.query.city;
-            let minBudget = route.query.minBudget === '' ? await getMinBudget() : req.query.minBudget;
-            let maxBudget = route.query.maxBudget === '' ? await getMaxBudget() : req.query.maxBudget;
-            let minSurface = route.query.minSurface === '' ? await getMinSurface() : req.query.minSurface;
-            let maxSurface = route.query.maxSurface === '' ? await getMaxSurface() : req.query.maxSurface;
-            let minTerrain = route.query.minTerrain === '' ? await getMinTerrain() : req.query.minTerrain;
-            let maxTerrain = route.query.maxTerrain === '' ? await getMaxTerrain() : req.query.maxTerrain;
+            let city = route.query.city === '' ? 'pourcentage' : route.query.city;
+            let minBudget = route.query.minBudget === '' ? await getMinBudget() : route.query.minBudget;
+            let maxBudget = route.query.maxBudget === '' ? await getMaxBudget() : route.query.maxBudget;
+            let minSurface = route.query.minSurface === '' ? await getMinSurface() : route.query.minSurface;
+            let maxSurface = route.query.maxSurface === '' ? await getMaxSurface() : route.query.maxSurface;
+            let minTerrain = route.query.minTerrain === '' ? await getMinTerrain() : route.query.minTerrain;
+            let maxTerrain = route.query.maxTerrain === '' ? await getMaxTerrain() : route.query.maxTerrain;
+
             
-            let responseResearch = null;
             try{
-                responseResearch = await axios.get(`http://localhost:8000/housing/research/${city}/${maxBudget}/${minBudget}/${maxTerrain}/${minTerrain}/${maxSurface}/${minSurface}`);
+                responseResearch = await axios.get(`https://nathimmo-backend.cluster-ig3.igpolytech.fr/housing/research/${city}/${maxBudget}/${minBudget}/${maxTerrain}/${minTerrain}/${maxSurface}/${minSurface}`);
             }
             catch(error){
                 console.log(error);
@@ -229,14 +295,12 @@
 
 
             if(route.query.rent === 'true'){
-                responseRent = await axios.get(`http://localhost:8000/housing/rent`);
+                responseRent = await axios.get(`https://nathimmo-backend.cluster-ig3.igpolytech.fr/housing/rent`);
             }
 
             if(route.query.sale === 'true'){
-                responseSale = await axios.get(`http://localhost:8000/housing/sale`);
+                responseSale = await axios.get(`https://nathimmo-backend.cluster-ig3.igpolytech.fr/housing/sale`);
             }
-
-            
 
             arrays = [
                     responseResearch.data,
@@ -252,25 +316,22 @@
                 return accumulator.filter(element => currentArray.some(arr => isEqual(arr, element)));
             });
 
-            HousingResults.forEach(async (element) => {
+ 
+            const photoPromises = HousingResults.map(async (element) => {
                 try {
-                    responsePhoto = await axios.get(`http://localhost:8000/photos/${element.id_housing}`);
-                    console.log(responsePhoto.data[0].photo);
+                    //https://nathimmo-backend.cluster-ig3.igpolytech.fr
+                    //http://localhost:5000
+                    const responsePhoto = await axios.get(`https://nathimmo-backend.cluster-ig3.igpolytech.fr/photos/${element.id_housing}`);
+                    const imageData = responsePhoto.data[0].photo;
+                    const base64Data = btoa(String.fromCharCode(...imageData.data));
+                    element.photos = `data:${responsePhoto.data[0].type};base64,${base64Data}`;
                 
-                    const imageData = responsePhoto.data[0].photo.data;
-                    console.log(imageData);
-                    const blob = new Blob([imageData], { type: 'image/jpeg' });
-                    console.log(blob);
-                    const blobURL = URL.createObjectURL(blob);
-                    console.log(element.photos);
-                    element.photos = blobURL;
-                    console.log(element.photos);
-    
                 } catch (error) {
-                    // Handle the error
-                    // element.photos = '/src/assets/image/no-image.jpg';
+                    element.photos = '/src/assets/image/no-image3.jpg';
                 }
             });
+
+            await Promise.all(photoPromises);
 
             return HousingResults;
 
@@ -280,21 +341,16 @@
         }
     }
 
-    const showHousing = ((id_housing) => {
+    const showHousing = ((id_housing, photos) => {
         // Use the retrieved values for further processing
 
         router.push({
             name: 'HousingView',
             query: {
-                id_housing: id_housing
+                id_housing: id_housing,
             }
         });
     });
-
-
-    let ResultData = await getResultData();
-
-    let ResultDataLength = ResultData.length;
 
     let newHousingType = null;
     let newHousingCity = null;
@@ -316,7 +372,7 @@
         try{
             if(newHousingAddress && newHousingType && newHousingCity && newHousingPrice && newHousingZipCode && newHousingLivingSurface !== null &&
                 newHousingGlobalSurface && newHousingNumberRoom  !== null && newHousingDescription && newHousingRent !== null && newHousingSale !== null){
-                    const response = await axios.post(`http://localhost:8000/housing`, {
+                    const response = await axios.post(`https://nathimmo-backend.cluster-ig3.igpolytech.fr/housing`, {
                     type: newHousingType,
                     price: newHousingPrice,
                     address: newHousingAddress,
@@ -330,6 +386,10 @@
                     sale: newHousingSale,
                     location: newHousingRent,
                     
+                }, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
                 });
                 // Update the ResultData array
                 ResultData = [...ResultData, {
@@ -366,32 +426,46 @@
 
                 // Hide the modal
                 showAddHousing.value = false;
+                success();
+            } else {
+                adding.emptyFields = true;
             }
         } catch (err) {
             console.log(err);
         }
     }
 
+    let likesData = [];
+
     const getLikes = async (id) => {
         try {
-            const response = await axios.get(`http://localhost:8000/likes/user/${id}`);
-            let likes = []; // Use a different variable name to avoid overwriting the array
-
-            for (let item of response.data) {
-                likes.push(item.id_housing); // Push the value into the `likes` array
+            const response = await axios.get(`https://nathimmo-backend.cluster-ig3.igpolytech.fr/likes/user/${id}`);
+            console.log(response.data);
+            if(!response.data){
+                return [];
+            } else{
+                for (let item of response.data) {
+                    likesData.push(item.id_housing); // Push the value into the `likes` array
+                }
+                return likesData;
             }
-            return likes;
         } catch (err) {
+
             console.log(err);
         }
     }
 
     let likes = ref([]);
-    likes.value = await getLikes(id);
+    if(token){
+        likes.value = await getLikes(id);
+        if(!likes.value){
+            likes.value = [];
+        }
+    }
     
     const addLike = async (id_housing) => {
         try {
-            const response = await axios.post(`http://localhost:8000/likes`, {
+            const response = await axios.post(`https://nathimmo-backend.cluster-ig3.igpolytech.fr/likes`, {
                 id_housing: id_housing,
                 id_user: id
             });
@@ -403,11 +477,27 @@
 
     const removeLike = async (id_housing) => {
         try {
-            const response = await axios.delete(`http://localhost:8000/likes/${id}/${id_housing}`);
+            const response = await axios.delete(`https://nathimmo-backend.cluster-ig3.igpolytech.fr/likes/${id}/${id_housing}`);
             likes.value.splice(likes.value.indexOf(id_housing), 1);
         } catch (err) {
             console.log(err);
         }
     }
+
+    let ResultData = ref([]);
+    ResultData.value = await getResultData();
+    let ResultDataLength = ref(0);
+    ResultDataLength.value = ResultData.value.length;
+
+    // Watch the route for changes
+    watch(route, async (to, from) => {
+        try {
+            const response = await getResultData();
+            ResultData.value = response;
+            ResultDataLength.value = ResultData.value.length;
+        } catch (err) {
+            console.log(err);
+        }
+    }, { immediate: true });
 </script>
 

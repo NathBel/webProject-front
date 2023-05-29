@@ -1,17 +1,17 @@
 <template>
     <header id="header">
-        <div class="bg-header-footer text-neutral-50 text-lg w-screen h-40 flex items-center justify-around space-x-10 > * + *">
+        <div class="bg-header-footer text-neutral-50 text-lg w-screen h-12 min-[350px]:h-20 lg:h-40 flex items-center justify-around space-x-10 > * + *">
             <RouterLink :to="{name: 'home'}">
                 <div class="flex flex-col items-center" @click="changePage('sale')">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10  self-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 lg:w-10 lg:h-10 self-center">
                         <path stroke-linecap="round" stroke-linejoin="round"
                         d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
                     </svg>
-                    <h1>Nath'Immo</h1>
+                    <h1 class="text-sm lg:text-xl">Nath'Immo</h1>
                 </div>
             </RouterLink>
-            <div class="flex items-center gap-16">
-                <div class="flex gap-8">
+            <div class="flex items-center gap-16 ">
+                <div class="lg:flex gap-8 hidden">
                     <RouterLink :to="{name: 'home'}" @click="changePage('sale')">
                         <div class="flex flex-col items-center cursor-pointer">
                             <h2>Acheter</h2>
@@ -31,20 +31,27 @@
                         </div>
                     </RouterLink>
                 </div>
-                <div class="flex items-center  gap-6">
+                <div class="flex items-center gap-6">
                     <RouterLink :to="{name: 'LoginView'}">
                         <button
                             v-if="!state.connected"
                             type="button"
-                            class="inline-block rounded bg-blue-primary px-4 pb-2.5 pt-2 text-lg font-medium leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
+                            class="inline-block rounded bg-blue-primary px-1.5 min-[350px]:px-2.5 pb-1 min-[350px]:pb-1.5 pt-1 min-[350px]:pt-1 lg:px-4 lg:pb-2.5 lg:pt-2 text-sm min-[350px]:text-base lg:text-lg font-medium leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
                         <h2>Se Connecter</h2>
                         </button>
                     </RouterLink>
 
+                    <!-- Dropdown phone -->
+                    <div v-if="state.connected" class="lg:hidden"  @click="toggleDropdown">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                    </div>
+
                     <div class="relative" v-if="state.connected">
                         <button
                         @click="toggleDropdown"
-                        class="flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        class="hidden lg:flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
                         Bonjour {{ firstName }}
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class=" ml-4 w-4 h-4">
@@ -56,9 +63,9 @@
                         <!-- Dropdown content -->
                         <div
                         v-if="state.isDropdownOpen"
-                        class="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-md shadow-lg"
+                        class="z-10 absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-md shadow-lg"
                         >
-                        <div class="">
+                        <div>
                             <RouterLink :to="{name: 'LikeView'}">
                                 <div
                                 class="flex items-center px-4 py-2 rounded-md  text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
@@ -101,11 +108,59 @@
                     </div>
                        
                     <RouterLink :to="{name: 'LikeView'}">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10">
+                        <svg v-if="state.connected" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 lg:w-10 lg:h-10">
                             <path stroke-linecap="round" stroke-linejoin="round" 
                             d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
                         </svg>
                     </RouterLink>
+
+                    <div class="lg:hidden" @click="toggleBurger">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                        </svg>
+                    </div>
+
+                    <!-- Burger content -->
+                    <div v-if="state.isBurgerOpen" class="z-10 absolute top-10 right-0 mt-2 w-48 bg-white border border-gray-300 rounded-md shadow-lg">
+                        <RouterLink :to="{name: 'home'}">
+                                <div
+                                class="flex items-center px-4 py-2 rounded-md  text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                                v-bind:class="{ 'underline': state.activePage === 'sale' }"
+                                @click="changePage('sale')"
+                                >
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="mr-2 w-5 h-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 21v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21m0 0h4.5V3.545M12.75 21h7.5V10.75M2.25 21h1.5m18 0h-18M2.25 9l4.5-1.636M18.75 3l-1.5.545m0 6.205l3 1m1.5.5l-1.5-.5M6.75 7.364V3h-3v18m3-13.636l10.5-3.819" />
+                                </svg>
+                                    Acheter
+                                </div>
+                            </RouterLink>
+                            <RouterLink :to="{name: 'home'}">
+                                <div
+                                class="flex items-center px-4 py-2 rounded-md  text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                                v-bind:class="{ 'underline': state.activePage === 'rent' }"
+                                @click="changePage('rent')"
+                                >
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="mr-2 w-5 h-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z" />
+                                </svg>
+
+                                Louer
+                                </div>
+                            </RouterLink>
+                            <RouterLink :to="{name: 'AgenciesView'}">
+                                <div
+                                class="flex items-center px-4 py-2 rounded-md  text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                                >
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="mr-2 w-5 h-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                                </svg>
+
+                                Nos agences
+                            </div>
+                            </RouterLink>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -129,6 +184,7 @@
         activePage: localStorage.getItem('activePage') || 'sale',
         connected: false,
         isDropdownOpen: false,
+        isBurgerOpen: false,
     });
 
     const changePage = (page) => {
@@ -155,7 +211,6 @@
         } catch (error) {
             console.error('Failed to decode token:', error);
         }
-        console.log(id, isAdmin, firstName, lastName, email)
     }
 
     const logout = () => {
@@ -164,7 +219,13 @@
     }
 
     const toggleDropdown = () => {
+        state.isBurgerOpen = false;
         state.isDropdownOpen = !state.isDropdownOpen;
+    }
+
+    const toggleBurger = () => {
+        state.isDropdownOpen = false;
+        state.isBurgerOpen = !state.isBurgerOpen;
     }
 
 </script>

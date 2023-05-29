@@ -1,10 +1,10 @@
 <template>
-    <div class="my-8 mx-10 w-screen">
-        <div class="flex justify-between">
-            <h2 class="text-2xl font-medium">
+    <div class="my-8 px-4 lg:px-10 w-full lg:w-8/12">
+        <div class="flex justify-between w-full">
+            <h2 class="text-xl lg:text-2xl font-medium">
                     Paramètres du compte
             </h2>
-            <div class="flex mr-64">
+            <div class="flex">
                 <svg xmlns="http://www.w3.org/2000/svg" 
                     fill="none" viewBox="0 0 24 24" 
                     stroke-width="1.5" 
@@ -39,8 +39,11 @@
             </div>
         </div>
 
-        <div class="m-8 p-4 text-xl font-medium">
-            <div class="flex gap-60 mb-8">
+        <div class="relative mt-6 mb-4 lg:mt-10 py-6 px-4 text-base lg:text-xl font-medium rounded-3xl border-2 border-sky-900">
+            <div class="absolute -top-4 left-6">
+                <h1 class="text-lg bg-white">Informations</h1>
+            </div>
+            <div class="flex justify-between mb-8">
                 <h4>
                     Nom : 
                     <span>{{ responseUserData.data.lastname }}</span>
@@ -65,7 +68,7 @@
                 <span v-if="!modifyUser">{{ responseUserData.data.address }}</span>
                 <input class="italic" type="text" placeholder="Nouvelle Adresse Postale" v-if="modifyUser" v-model="newAddress">
             </h4>
-            <div class="flex gap-60 mb-8">
+            <div class="flex justify-between">
                 <h4>
                     Ville : 
                     <span v-if="!modifyUser">{{ responseUserData.data.city }}</span>
@@ -113,7 +116,7 @@
 
     const getUserData = async () => {
         try {
-            const responseUserData = await axios.get(`http://localhost:8000/user/${id}`);
+            const responseUserData = await axios.get(`https://nathimmo-backend.cluster-ig3.igpolytech.fr/user/${id}`);
             return responseUserData;
         } catch (error) {
             console.error(error);
@@ -141,7 +144,7 @@
         newZipCode = newZipCode !== null ? newZipCode : responseUserData.data.zip_code;
 
         try{
-            const response = await axios.put(`http://localhost:8000/user/${idUser}`, {
+            const response = await axios.put(`https://nathimmo-backend.cluster-ig3.igpolytech.fr/user/${idUser}`, {
                 firstname: responseUserData.data.firstname,
                 lastname: responseUserData.data.lastname,
                 mobile_phone: newPhone,

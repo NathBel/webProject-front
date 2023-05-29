@@ -1,5 +1,5 @@
 <template>
-    <div class="my-16 md:w-8/12 lg:ml-6 lg:w-5/12">
+    <div class="my-4 min-[350px]:my-16 md:w-8/12 lg:ml-6 lg:w-5/12">
         <h2 class="mb-6 text-2xl">Créer mon compte</h2>
         <form>
             <div class="flex gap-36" data-te-input-wrapper-init>
@@ -139,6 +139,10 @@
             class="mt-6 bg-red-300 flex justify-center w-full rounded px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-red-700 shadow-[0_4px_9px_-4px_#3b71ca] hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
                 <p v-if="register.errorField">Veuillez remplir tous les champs !</p>
                 <p v-if="register.errorAccountAlreadyExists">Compte déjà existant, veuillez-vous connecter</p>
+                <p v-if="register.passwordTooShort">Le mot de passe doit faire 6 caractères minimum</p>
+                <p v-if="register.emailNotValid">Veuillez entrer un email valide</p>
+                <p v-if="register.zipcodeNotValid">Veuillez entrer un code postal valide</p>
+                <p v-if="register.phoneNotValid">Veuillez entrer un numéro de téléphone valide</p>
             </div>
 
             <RouterLink :to="{name: 'LoginView'}">
@@ -155,7 +159,7 @@
     import axios from 'axios';
     import { reactive } from 'vue';
     import  { useRouter } from 'vue-router';
-    import bcrypt from 'bcryptjs';
+    import CryptoJS from 'crypto-js';
 
     const router = useRouter();
 
@@ -171,6 +175,10 @@
     const register = reactive({
         errorField: false,
         errorAccountAlreadyExists: false,
+        emailNotValid: false,
+        passwordTooShort: false,
+        zipcodeNotValid: false,
+        phoneNotValid: false,
     });
 
     const createAccount = async() => {
@@ -181,8 +189,24 @@
                 console.log(register.errorField);
                 return;
             }
+            if(password.value.length < 6){
+                register.passwordTooShort = true;
+                return;
+            }
+            if(!mail.value.includes('@')){
+                register.emailNotValid = true;
+                return;
+            }
+            if(zipcode.value.length != 5){
+                register.zipcodeNotValid = true;
+                return;
+            }
+            if(phone.value.length != 10){
+                register.phoneNotValid = true;
+                return;
+            }
             //Check if account already exists
-            try{ const response = await axios.get(`http://localhost:8000/user/email/${mail.value}`);
+            try{ const response = await axios.get(`https://nathimmo-backend.cluster-ig3.igpolytech.fr/user/email/${mail.value}`);
                 console.log(response.data);
                 if(response.data !== null){
                     console.log('test');
@@ -193,11 +217,12 @@
                 console.log(error);
             }
 
-            // Generate a salt (a random value used in the encryption process)
-            const salt = bcrypt.genSaltSync(10);
+            // Encrypt key
+            const encryptionKey = 'RMN7lA3UAtmRB+K8xI+Nde2zySywV5ZscXaNuD2Cxzr3zV5u+P0TUz2sBCjg2VT';
 
-            // Encrypt the password
-            const hashedPassword = bcrypt.hashSync(password.value, salt);
+            // Encrypt using AES encryption
+            const encryptedPassword = CryptoJS.AES.encrypt(password.value, encryptionKey).toString();
+
 
             //Create account
             const data = {
@@ -208,11 +233,11 @@
                 city: city.value,
                 zip_code: zipcode.value,
                 email: mail.value,
-                password: hashedPassword,
+                password: encryptedPassword,
                 isAdmin: 0,
             }
 
-            await axios.post('http://localhost:8000/user/register', data);
+            await axios.post('https://nathimmo-backend.cluster-ig3.igpolytech.fr/user/register', data);
             router.push({name: 'LoginView'});
 
         } catch (error) {
