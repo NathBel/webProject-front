@@ -153,7 +153,6 @@
                 zip_code: newZipCode,
                 email: newEmail,
             });
-            console.log(response);
 
             //Update value
             responseUserData.data.email = newEmail;

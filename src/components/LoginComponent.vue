@@ -149,7 +149,6 @@
                 });
                 // Get the JWT
                 const token = response.data.token;
-                console.log(token);
                 // Store the JWT in local storage or a cookie
                 localStorage.setItem('token', token); 
                 // Redirect to the home page

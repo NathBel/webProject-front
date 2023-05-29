@@ -79,9 +79,8 @@
     const getLikes = async () => {
         try{
             const response = await axios.get(`https://nathimmo-backend.cluster-ig3.igpolytech.fr/likes/user/${id}`);
-            console.log(response.data[0]);
+
             if(response.data[0] == undefined){
-                console.log('No likes');
                 return [];
             }
             for (let item of response.data) {
@@ -113,9 +112,6 @@
     let likesData = [];
     likesData = await getLikes();
     const likesDataLength = likesData.length;
-
-    console.log(likesData);
-    console.log(likesDataLength);
 
     const getLikesTab = (likesData) => {
         for (let item of likesData) {

@@ -195,12 +195,6 @@
     try {
         // Decode the token
         const decoded = jwtDecode(token);
-        const currentTimestamp = Math.floor(Date.now() / 1000); // Current timestamp in seconds
-        if (decoded.exp < currentTimestamp) {
-            console.log('Access token has expired');
-        } else {
-            console.log('Access token has NOT expired');
-        }
 
         id = decoded.dataId;
         isAdmin = decoded.dataIsAdmin;

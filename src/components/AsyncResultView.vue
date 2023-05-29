@@ -172,13 +172,10 @@
     const route = useRoute();
     const router = useRouter();
 
-    console.log(route.query);
-
     if(token){
         try {
         // Decode the token
         const decoded = jwtDecode(token);
-        console.log(token);
 
         // Assign the values
         id = decoded.dataId;

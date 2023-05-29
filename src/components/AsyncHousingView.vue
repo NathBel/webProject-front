@@ -265,7 +265,6 @@
     const HousingData = await getHousingData();
 
     const getAgentData = async () => {
-        console.log(HousingData.id_agency);
         try {
             const responseAgent = await axios.get(`https://nathimmo-backend.cluster-ig3.igpolytech.fr/agent/agency/${HousingData.id_agency}`);
             return responseAgent.data;
@@ -275,7 +274,6 @@
     }
 
     const agentsData = await getAgentData();
-    console.log(agentsData);
     
     const deleteHousing = async(idHousing) => {
         try {

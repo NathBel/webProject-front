@@ -190,7 +190,6 @@
                 register.zipcodeNotValid = false;
                 register.phoneNotValid = false;
                 register.errorField = true;
-                console.log(register.errorField);
                 return;
             }
             if(password.value.length < 6){
@@ -209,7 +208,7 @@
                 register.emailNotValid = true;
                 return;
             }
-            console.log(zipcode.value.length);
+
             if(zipcode.value.length != 5){
                 register.passwordTooShort = false;
                 register.emailNotValid = false;
@@ -218,7 +217,7 @@
                 register.zipcodeNotValid = true;
                 return;
             }
-            console.log(phone.value.length);
+
             if(phone.value.length != 10){
                 register.passwordTooShort = false;
                 register.emailNotValid = false;
@@ -229,9 +228,7 @@
             }
             //Check if account already exists
             try{ const response = await axios.get(`https://nathimmo-backend.cluster-ig3.igpolytech.fr/user/email/${mail.value}`);
-                console.log(response.data);
                 if(response.data !== null){
-                    console.log('test');
                     register.errorAccountAlreadyExists = true;
                     return;
                 }
