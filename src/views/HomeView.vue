@@ -1,6 +1,6 @@
 <template >
   <div class="snap-y snap-mandatory overflow-y-scroll overflow-hidden h-screen font-DMsans">
-    <section class="bg-cover bg-center bg-[url('./public/bg-img/locate_homepage.jpg')] w-screen h-screen snap-start">
+    <section class="bg-cover bg-center bg-[url('bg-img/locate_homepage.jpg')] w-screen h-screen snap-start">
             <Header />
               <div class="w-screen min-[350px]:h-4/6 flex justify-center items-center">
                 <div class="w-max">
@@ -28,7 +28,7 @@
                     </svg>
                 </div>
     </section>
-    <section class="bg-cover bg-center bg-[url('./public/bg-img/maison1-1.jpg')] w-screen h-screen snap-start flex items-end">
+    <section class="bg-cover bg-center bg-[url('bg-img/maison1-1.jpg')] w-screen h-screen snap-start flex items-end">
       <div>
         <div class="flex justify-center lg:block">
           <div class="bg-header-footer text-white lg:m-16 text-lg lg:text-3xl font-DMsans rounded-xl px-4 lg:px-8 py-2 w-max">
@@ -43,7 +43,7 @@
           </div>
         </div>
     </section>
-    <section class="bg-cover bg-center bg-[url('../public/bg-img/locate_homepage.jpg')] w-screen h-screen snap-start flex items-end">
+    <section class="bg-cover bg-center bg-[url('bg-img/locate_homepage.jpg')] w-screen h-screen snap-start flex items-end">
       <div>
         <div class="flex justify-center lg:block">
           <div class="bg-header-footer text-white lg:m-16 text-lg lg:text-3xl font-DMsans rounded-xl px-4 lg:px-8 py-2 w-max">
@@ -58,7 +58,7 @@
         </div>
       </div>
     </section>
-    <section class="bg-cover bg-center bg-[url('../public/bg-img/maison3-1.jpg')] w-screen h-screen snap-start flex items-end">
+    <section class="bg-cover bg-center bg-[url('bg-img/maison3-1.jpg')] w-screen h-screen snap-start flex items-end">
       <div>
         <div class="w-screen flex justify-center mb-16 lg:block">
           <div class="bg-header-footer text-white lg:m-16 text-lg lg:text-3xl font-DMsans rounded-xl px-4 lg:px-8 py-2 w-max">
