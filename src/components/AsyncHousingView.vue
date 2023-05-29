@@ -241,7 +241,7 @@
 
             try{
                 const responsePhoto = await axios.get(`https://nathimmo-backend.cluster-ig3.igpolytech.fr/photos/${route.query.id_housing}`);
-                    
+                
                 const imageData = responsePhoto.data[0].photo;
         
                 // Convert the blob data to a base64-encoded string
@@ -252,7 +252,7 @@
         
                 return responseHousing.data;
             } catch (error) {
-                responseHousing.data.photos = '/src/assets/image/no-image3.jpg';
+                responseHousing.data.photos = './src/assets/image/no-image3.jpg';
                 console.error(error);
                 return responseHousing.data;
             }
