@@ -67,7 +67,7 @@
                 <div class="relative mb-6">
                     <input
                         v-model="zipcode"
-                        type="number"
+                        type="text"
                         class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
                         id="exampleFormControlInput3"
                         placeholder="Code Postal" />
@@ -185,23 +185,45 @@
         try{
             //Check if all fields are filled
             if(firstname.value == '' || lastname.value == '' || phone.value == '' || address.value == '' || zipcode.value == '' || city.value == '' || mail.value == '' || password.value == ''){
+                register.passwordTooShort = false;
+                register.emailNotValid = false;
+                register.zipcodeNotValid = false;
+                register.phoneNotValid = false;
                 register.errorField = true;
                 console.log(register.errorField);
                 return;
             }
             if(password.value.length < 6){
+                register.errorField = false;
+                register.emailNotValid = false;
+                register.zipcodeNotValid = false;
+                register.phoneNotValid = false;
                 register.passwordTooShort = true;
                 return;
             }
             if(!mail.value.includes('@')){
+                register.passwordTooShort = false;
+                register.errorField = false;
+                register.zipcodeNotValid = false;
+                register.phoneNotValid = false;
                 register.emailNotValid = true;
                 return;
             }
+            console.log(zipcode.value.length);
             if(zipcode.value.length != 5){
+                register.passwordTooShort = false;
+                register.emailNotValid = false;
+                register.errorField = false;
+                register.phoneNotValid = false;
                 register.zipcodeNotValid = true;
                 return;
             }
+            console.log(phone.value.length);
             if(phone.value.length != 10){
+                register.passwordTooShort = false;
+                register.emailNotValid = false;
+                register.zipcodeNotValid = false;
+                register.errorField = false;
                 register.phoneNotValid = true;
                 return;
             }

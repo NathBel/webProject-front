@@ -8,11 +8,11 @@
         </h2>
         <div v-if="likesDataLength > 0" class="grid pt-2">
             <div v-for="like in likesData" :key="like.id_like">
-                <div class="flex cursor-pointer lg:rounded-3xl lg:border-2 border-b border-sky-900 hover:bg-slate-200 lg:mx-16 mb-8 p-4" @click.prevent="showHousing(result.id_housing)">
+                <div class="flex cursor-pointer lg:rounded-3xl lg:border-2 border-b border-sky-900 hover:bg-slate-200 lg:mx-16 mb-8 p-4" @click.prevent="showHousing(like.housingData.id_housing)">
                     <div class="w-full h-full">
                         <div class="lg:flex justify-center">
                             <div class="w-full h-1/2 lg:w-80 lg:h-52 lg:m-4 flex justify-center">
-                                <img :src="like.housingData.photos" alt="Image du logement" class="object-none">
+                                <img :src="like.housingData.photos" alt="Image du logement" class="lg:w-80 lg:h-52 object-fill">
                                 
                             </div>
                             <div>
@@ -48,6 +48,7 @@
     import jwtDecode from 'jwt-decode';
     import axios from 'axios';
     import { ref } from 'vue';
+    import { useRouter } from 'vue-router';
 
     const token = localStorage.getItem('token');
     let id = null;
@@ -55,6 +56,8 @@
     let firstName = null;
     let lastName = null;
     let email = null;
+
+    const router = useRouter();
 
     try {
         // Decode the token
@@ -75,8 +78,10 @@
 
     const getLikes = async () => {
         try{
-            const response = await axios.get(`https://nathimmo-backend.cluster-ig3.igpolytech.fr/user/${id}`);
-            if(response.data[0] == undefined || response.data[0].likes == null){
+            const response = await axios.get(`https://nathimmo-backend.cluster-ig3.igpolytech.fr/likes/user/${id}`);
+            console.log(response.data[0]);
+            if(response.data[0] == undefined){
+                console.log('No likes');
                 return [];
             }
             for (let item of response.data) {
@@ -146,6 +151,16 @@
         }
     }
 
+    const showHousing = ((id_housing, photos) => {
+        // Use the retrieved values for further processing
+
+        router.push({
+            name: 'HousingView',
+            query: {
+                id_housing: id_housing,
+            }
+        });
+    });
 
 
 

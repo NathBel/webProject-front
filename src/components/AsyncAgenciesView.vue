@@ -70,9 +70,9 @@
                 
                     <div class="flex items-center gap-2">   
                         <p v-if="modifyKey !== agency.id_agency">{{ agency.city }}</p>
-                        <input v-if="modifyKey === agency.id_agency" type="text" placeholder="Nouvelle ville" v-model="agencyCity" />
+                        <input v-if="modifyKey === agency.id_agency" type="text" class="w-48 m-2" placeholder="Nouvelle ville" v-model="agencyCity" />
                         <p v-if="modifyKey !== agency.id_agency">({{ agency.zip_code }})</p>
-                        <input v-if="modifyKey === agency.id_agency" type="text" placeholder="Nouveau Code Postal" v-model="agencyZipCode" />
+                        <input v-if="modifyKey === agency.id_agency" type="text" class="w-20" placeholder="Nouveau Code Postal" v-model="agencyZipCode" />
                     </div>
 
 

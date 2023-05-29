@@ -5,7 +5,7 @@
                 Vos rendez-vous programmés
         </h2>
 
-        <h3 class="text-lg lg:text-2xl font-medium" v-if="appointmentDataLength === undefined">
+        <h3 class="text-lg lg:text-2xl font-medium" v-if="appointmentDataLength === 0">
             Vous n'avez aucun rendez-vous programmé
         </h3>
 
@@ -210,10 +210,11 @@
 
     const getAppointmentData = async () => {
         try {
-            const response = await axios.get(`https://nathimmo-backend.cluster-ig3.igpolytech.fr/user/${id}`);
+            const response = await axios.get(`https://nathimmo-backend.cluster-ig3.igpolytech.fr/appointment/user/${id}`);
             return response.data; // Update the ref value
         } catch (error) {
             console.error(error);
+            return [];
         }
     };
 
@@ -229,7 +230,7 @@
 
     const getHousingData = async (housingId) => {
         try {
-            const response = await axios.get(`https://nathimmo-backend.cluster-ig3.igpolytech.fr/id/${housingId}`);
+            const response = await axios.get(`https://nathimmo-backend.cluster-ig3.igpolytech.fr/housing/id/${housingId}`);
             return response.data;
         } catch (error) {
             console.error(error);
@@ -279,7 +280,7 @@
     const deleteAppointment = async (appointmentId) => {
         try {
             //https://nathimmo-backend.cluster-ig3.igpolytech.fr
-            const response = await axios.delete(`https://localhost:/appointment/${appointmentId}`, {
+            const response = await axios.delete(`https://nathimmo-backend.cluster-ig3.igpolytech.fr/appointment/${appointmentId}`, {
             headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`, // Include the token in the Authorization header
@@ -328,7 +329,10 @@
     };
 
     appointmentData = await getAppointmentData();
-    const appointmentDataLength = appointmentData.length;
+    let appointmentDataLength = 0;
+    if(appointmentData !== undefined){
+        appointmentDataLength = appointmentData.length;
+    }
 
     if(appointmentDataLength > 0){
         for (const aptm of appointmentData) {

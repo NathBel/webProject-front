@@ -172,10 +172,13 @@
     const route = useRoute();
     const router = useRouter();
 
+    console.log(route.query);
+
     if(token){
         try {
         // Decode the token
         const decoded = jwtDecode(token);
+        console.log(token);
 
         // Assign the values
         id = decoded.dataId;
@@ -277,13 +280,21 @@
                 }
             }
 
-            let city = route.query.city === '' ? 'pourcentage' : route.query.city;
-            let minBudget = route.query.minBudget === '' ? await getMinBudget() : route.query.minBudget;
-            let maxBudget = route.query.maxBudget === '' ? await getMaxBudget() : route.query.maxBudget;
-            let minSurface = route.query.minSurface === '' ? await getMinSurface() : route.query.minSurface;
-            let maxSurface = route.query.maxSurface === '' ? await getMaxSurface() : route.query.maxSurface;
-            let minTerrain = route.query.minTerrain === '' ? await getMinTerrain() : route.query.minTerrain;
-            let maxTerrain = route.query.maxTerrain === '' ? await getMaxTerrain() : route.query.maxTerrain;
+            let city = null;
+            let minBudget = null;
+            let maxBudget = null;
+            let minSurface = null;
+            let maxSurface = null;
+            let minTerrain = null;
+            let maxTerrain = null;
+
+            city = route.query.city === '' ? 'pourcentage' : route.query.city;
+            minBudget = route.query.minBudget === '' ? await getMinBudget() : route.query.minBudget;
+            maxBudget = route.query.maxBudget === '' ? await getMaxBudget() : route.query.maxBudget;
+            minSurface = route.query.minSurface === '' ? await getMinSurface() : route.query.minSurface;
+            maxSurface = route.query.maxSurface === '' ? await getMaxSurface() : route.query.maxSurface;
+            minTerrain = route.query.minTerrain === '' ? await getMinTerrain() : route.query.minTerrain;
+            maxTerrain = route.query.maxTerrain === '' ? await getMaxTerrain() : route.query.maxTerrain;
 
             
             try{
@@ -306,6 +317,7 @@
                     responseResearch.data,
                     responseType
             ];
+
 
             responseRent !== null ? arrays.push(responseRent.data) : null;
 
@@ -371,7 +383,7 @@
         newHousingSale = newHousingSale === null ? 0 : 1;
         try{
             if(newHousingAddress && newHousingType && newHousingCity && newHousingPrice && newHousingZipCode && newHousingLivingSurface !== null &&
-                newHousingGlobalSurface && newHousingNumberRoom  !== null && newHousingDescription && newHousingRent !== null && newHousingSale !== null){
+                newHousingGlobalSurface && newHousingNumberRoom !== null && newHousingDescription && newHousingRent !== null && newHousingSale !== null){
                     const response = await axios.post(`https://nathimmo-backend.cluster-ig3.igpolytech.fr/housing`, {
                     type: newHousingType,
                     price: newHousingPrice,
@@ -385,6 +397,7 @@
                     energy_performance: newHousingEnergyClass,
                     sale: newHousingSale,
                     location: newHousingRent,
+                    id_agency: 6
                     
                 }, {
                     headers: {
@@ -392,7 +405,7 @@
                     }
                 });
                 // Update the ResultData array
-                ResultData = [...ResultData, {
+                ResultData.value = [...ResultData.value, {
                     id_housing: response.data.id_housing,
                     type: newHousingType,
                     price: newHousingPrice,
@@ -408,7 +421,7 @@
                     location: newHousingRent,
                 }];
 
-                ResultDataLength = ResultData.length;
+                ResultDataLength.value = ResultData.value.length;
 
                 // Reset the values
                 newHousingType = null;
@@ -440,7 +453,6 @@
     const getLikes = async (id) => {
         try {
             const response = await axios.get(`https://nathimmo-backend.cluster-ig3.igpolytech.fr/likes/user/${id}`);
-            console.log(response.data);
             if(!response.data){
                 return [];
             } else{

@@ -23,11 +23,11 @@
                                 for="checkbox-8"
                                 data-ripple-dark="true">
                                 <input
-                                id="house"
-                                type="checkbox"
-                                checked
-                                v-model="house"
-                                class="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border border-black transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-blue-500 checked:bg-blue-500 checked:before:bg-blue-500 hover:before:opacity-10"
+                                    id="house"
+                                    type="checkbox"
+                                    checked
+                                    v-model="house"
+                                    class="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border border-black transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-blue-500 checked:bg-blue-500 checked:before:bg-blue-500 hover:before:opacity-10"
                                 />
                                 <div class="pointer-events-none absolute top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 text-white opacity-0 transition-opacity peer-checked:opacity-100">
                                     <svg
@@ -277,9 +277,9 @@
     const router = useRouter();
     const searchQuery = ref('');
 
-    const land = ref('');
-    const house = ref('');
-    const apartement = ref('');
+    const land = ref('true');
+    const house = ref('true');
+    const apartement = ref('true');
     const city = ref('');
     const minBudget = ref('');
     const maxBudget = ref('');
@@ -287,7 +287,7 @@
     const maxSurface = ref('');
     const minTerrain = ref('');
     const maxTerrain = ref('');
-    const sale = ref('');
+    const sale = ref('true');
     const rent = ref('');
 
     const searchHousing = (() => {

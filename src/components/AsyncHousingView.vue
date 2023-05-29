@@ -69,7 +69,7 @@
                         </div>
                     </div>
                 <p v-if="!showModifyInput" class="flex items-end text-2xl lg:text-3xl font-bold">{{ HousingData.price.toLocaleString() }} €<p v-if="HousingData.location == true" class="ml-2 text-xl font-normal"> /mois</p></p>
-                <input v-if="showModifyInput" type="number" placeholder="Prix" v-model="newHousingPrice" />
+                <input class="bg-slate-200" v-if="showModifyInput" type="number" placeholder="Prix" v-model="newHousingPrice" />
                 </div>
             </div>
             <div v-if="showModifyInput" class="flex gap-3 items-center text-lg font-medium mx-10 mb-8">
@@ -79,14 +79,14 @@
                 <input type="checkbox" :checked="HousingData.sale === 1" v-model="newHousingSale"/>
             </div>
             <div class="mx-4 lg:mx-10 mb-8 font-medium">
-                <p v-if="!showModifyInput" class="text-xl">{{ HousingData.number_room }} pièces - {{ HousingData.living_surface }}m² habitable - {{ HousingData.global_surface }}m² de terrain</p>
-                <div v-if="showModifyInput"><input type="number" placeholder="Nombre de pièces" v-model="newHousingNumberRoom" /> - <input type="number" placeholder="Surface habitable" v-model="newHousingLivingSurface" />m² - <input type="number" placeholder="Surface du terrain" v-model="newHousingGlobalSurface" />m²</div>
+                <p v-if="!showModifyInput" class="text-xl">{{ HousingData.number_room }} pièces • {{ HousingData.living_surface }}m² habitable • {{ HousingData.global_surface }}m² de terrain</p>
+                <div v-if="showModifyInput"><input class="bg-slate-200" type="number" placeholder="Nombre de pièces" v-model="newHousingNumberRoom" /> • <input class="bg-slate-200" type="number" placeholder="Surface habitable" v-model="newHousingLivingSurface" />m² • <input class="bg-slate-200" type="number" placeholder="Surface du terrain" v-model="newHousingGlobalSurface" />m²</div>
             </div>
             <p v-if="!showModifyInput" class="mx-4 lg:mx-10 mb-8 font-medium text-xl">{{ HousingData.city }} ({{ HousingData.zip_code }}) </p>
-            <div v-if="showModifyInput" class="mx-4 lg: mb-8">
-                <input type="text" placeholder="Ville" v-model="newHousingCity" />
-                (<input type="text" placeholder="Code Postal" v-model="newHousingZipCode" />)
-                <input type="text" placeholder="Addresse Postale" v-model="newHousingAddress" />
+            <div v-if="showModifyInput" class="mx-4 lg:mx-10 mb-8">
+                <input class="bg-slate-200" type="text" placeholder="Ville" v-model="newHousingCity" />
+                (<input class="bg-slate-200" type="text" placeholder="Code Postal" v-model="newHousingZipCode" />)
+                <input class="bg-slate-200" type="text" placeholder="Addresse Postale" v-model="newHousingAddress" />
             </div>
             <div class="mx-4 lg:mx-10 my-2 flex gap-4 lg:gap-28 text-xl">
                 <p class="font-medium w-1/2">Description : <span v-if="!showModifyInput" class="font-light">{{ HousingData.description }}</span>
@@ -139,7 +139,7 @@
                 <div
                     v-if="adding.success"
                     class="mt-6 w-full bg-green-300 flex justify-center rounded px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-green-700 shadow-[0_4px_9px_-4px_#3b71ca] hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
-                    Agence ajoutée avec succès !
+                    RDV ajouté !
                 </div>
             </div>
         </div>
@@ -253,8 +253,8 @@
                 return responseHousing.data;
             } catch (error) {
                 responseHousing.data.photos = '/src/assets/image/no-image3.jpg';
-                return responseHousing.data;
                 console.error(error);
+                return responseHousing.data;
             }
 
         } catch (error) {
@@ -285,7 +285,6 @@
                     Authorization: `Bearer ${token}`,
                 },
             });
-            // Remove the deleted appointment from the appointmentData array
             showConfirmation.value = false;
             router.push({ name: 'home' });
         } catch (error) {
