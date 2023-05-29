@@ -252,7 +252,7 @@
         
                 return responseHousing.data;
             } catch (error) {
-                responseHousing.data.photos = '/public/image/no-image3.jpg';
+                responseHousing.data.photos = '/image/no-image3.jpg';
                 console.error(error);
                 return responseHousing.data;
             }
